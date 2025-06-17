@@ -4,7 +4,8 @@ CXXFLAGS = -std=c++17 -I.
 LDFLAGS = 
 
 # Directories
-SRC_DIR = Source
+SRC_DIR = Module/Source
+HDR_DIR = Module/Header
 TEST_DIR = Test/Source
 UTILS_DIR = Utils/Source
 BIN_DIR = bin
@@ -13,12 +14,12 @@ OBJ_DIR = Object
 
 # Header-only files
 HEADER_ONLY_FILES = \
-    $(SRC_DIR)/JsonType.h \
-    $(SRC_DIR)/JsonBlock.h \
-    $(SRC_DIR)/JsonValue.h \
-    $(SRC_DIR)/JsonArray.h \
-    $(SRC_DIR)/JsonObject.h \
-    $(SRC_DIR)/JsonParser.h 
+    $(HDR_DIR)/JsonType.h \
+    $(HDR_DIR)/JsonBlock.h \
+    $(HDR_DIR)/JsonValue.h \
+    $(HDR_DIR)/JsonArray.h \
+    $(HDR_DIR)/JsonObject.h \
+    $(HDR_DIR)/JsonParser.h 
 
 # Source files
 PARSER_SRCS = \
