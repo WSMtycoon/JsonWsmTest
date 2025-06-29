@@ -19,7 +19,7 @@
 #include <regex>
 #include <iostream>
 
-#include "../../Module/Header/JsonParser.h"
+#include "../../Module/Header/JsonWsm/JsonParser.h"
 
 namespace WSM {
 

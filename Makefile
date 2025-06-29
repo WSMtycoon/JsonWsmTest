@@ -5,7 +5,7 @@ LDFLAGS =
 
 # Directories
 SRC_DIR = Module/Source
-HDR_DIR = Module/Header
+HDR_DIR = Module/Header/JsonWsm
 TEST_DIR = Test/Source
 UTILS_DIR = Utils/Source
 BIN_DIR = bin
