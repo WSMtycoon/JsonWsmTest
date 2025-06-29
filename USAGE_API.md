@@ -7,30 +7,25 @@ JsonWSM is a lightweight JSON parser that provides a simple interface for workin
 ## Basic Usage
 
 ```cpp
-#include "JsonWSM.h"
+#include "JsonWSM/JsonParser.h"
 
 // Create a JSON object from a string
-WSM::JsonMin json("{\"name\": \"John\", \"age\": 30, \"pi\": 3.14f}");
+WSM::JsonParser json("{\"name\": \"John\", \"age\": 30, \"pi\": 3.14f}");
 
 // Access values
-std::any name = json["name"];
-std::any age = json["age"];
-std::any pi = json["pi"];
+JsonValue name = json["name"];
+JsonValue age = json["age"];
+JsonValue pi = json["pi"];
 ```
 
 ## API Methods
 
 ### Constructors
 
-- `JsonMin()` - Default constructor
-- `JsonMin(const std::string& jsonStr)` - Constructor that parses JSON from a string
+- `JsonParser()` - Default constructor
+- `JsonParser(const std::string& jsonStr)` - Constructor that parses JSON from a string
 
-### Value Access
-
-- `std::any operator[](const std::string& key)` - Access value by key
-- `std::any getValue(const std::string& path)` - Access nested values using dot notation (e.g., "user.address.city")
-
-### Type Checking
+### Type Checking JsonParser Object
 
 - `JsonType getType(const std::string& key)` - Get the type of a value
 - `bool isBool(const std::string& key)` - Check if value is boolean
@@ -42,18 +37,42 @@ std::any pi = json["pi"];
 - `bool isObject(const std::string& key)` - Check if value is object
 - `bool isNull(const std::string& key)` - Check if value is null
 
-### Data Access
+### Value Access
 
-- `const std::map<std::string, std::any>& getData()` - Get the internal data map
-- `void traverse(const std::function<void(const std::string& path, const std::any& value, JsonType type)>& callback, const std::string& prefix = "")` - Recursively traverse the JSON structure
+- `JsonValue operator[const std::string& key]` - Access value by key
+
+### Type Checking JsonValue
+
+- `bool isBool()` - Check if value is boolean
+- `bool isInt()` - Check if value is integer
+- `bool isLong()` - Check if value is Long
+- `bool isFloat()` - Check if value is float
+- `bool isDouble()` - Check if value is double
+- `bool isString()` - Check if value is string
+- `bool isArray()` - Check if value is array
+- `bool isObject()` - Check if value is object
+- `bool isNull()` - Check if value is null
+- `JsonType getType()` - Get the type of a value
+
+### Data Access JsonValue
+- `bool getBool()` - Get if value is boolean
+- `int getInt()` - Get if value is integer
+- `long getLong()` - Get if value is Long
+- `float getFloat()` - Get if value is float
+- `double getDouble()` - Get if value is double
+- `std::string getString()` - Get if value is string
+- `std::shared_ptr<JsonArray> getArray()` - Get if value is array
+- `std::shared_ptr<JsonObject> getObject` - Get if value is object
+
+
+
 
 ### Utility Methods
 
-- `int getSize(const std::string& key = "")` - Get the size of an object or array
-- `bool empty(const std::string& key = "")` - Check if an object or array is empty
+- `bool empty()` - Check if an object or array is empty
+- `int getSize()` - Get the size of an object or array
 - `bool hasField(const std::string& key)` - Check if a field exists
-- `std::vector<std::string> getFields(const std::string& key = "")` - Get all field names
-- `std::string getTypeName(JsonType type)` - Get the string representation of a type
+- `std::vector<std::string> getFields()` - Get all field names
 
 ## Supported Data Types
 
@@ -84,28 +103,24 @@ std::any pi = json["pi"];
 WSM::JsonMin json("{\"name\": \"John\", \"age\": 30, \"pi\": 3.14f, \"precise\": 1.2345678f}");
 
 // Check types
-if (json.isString("name")) {
+if (json["name"].isString()) {
     std::string name = std::any_cast<std::string>(json["name"]);
 }
 
-if (json.isInt("age")) {
+if (json["age"].isInt()) {
     int age = std::any_cast<int>(json["age"]);
 }
 
-if (json.isFloat("pi")) {
+if (json["pi"].isFloat()) {
     float pi = std::any_cast<float>(json["pi"]);
 }
 
-if (json.isDouble("precise")) {
+if (json["precise"].isDouble()) {
     double precise = std::any_cast<double>(json["precise"]);
 }
 
 // Access nested values
 WSM::JsonMin nested("{\"user\": {\"name\": \"John\", \"address\": {\"city\": \"New York\"}}}");
-std::any city = nested.getValue("user.address.city");
+std::string city = nested["user"]["adress"]["city"].getString();
 
-// Traverse all values
-nested.traverse([](const std::string& path, const std::any& value, WSM::JsonType type) {
-    std::cout << path << ": " << value << " (type: " << type << ")\n";
-});
 ```
